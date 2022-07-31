@@ -1,8 +1,7 @@
 name: NativeAOT Build
 
 on:
-  workflow_run:
-    branches: [ "aot" ]
+  workflow_dispatch:
 
 jobs:
   build-on-windows:
