@@ -1,0 +1,22 @@
+name: NativeAOT Build
+
+on:
+  workflow_run:
+    branches: [ "aot" ]
+
+jobs:
+  build-on-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Publish
+      run: dotnet publish -c Release
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Windows-Artifact
+        path: |
+          .\bin\x64\Release\net7.0\win10-x64\publish\
