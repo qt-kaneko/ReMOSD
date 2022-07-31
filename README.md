@@ -5,7 +5,7 @@ P.S. Application will wait in the background until media OSD will be shown for a
 
 ## How To Basic:
 ### How to install:
-1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/2.0/ReMOSD.exe) (now project supports only 64-bit, download [1.0 release](https://github.com/qt-kaneko/ReMOSD/releases/download/1.0/ReMOSD.exe) if you need 32-bit support).
+1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/2.1/ReMOSD.exe) (now project supports only 64-bit, download [1.0 release](https://github.com/qt-kaneko/ReMOSD/releases/download/1.0/ReMOSD.exe) if you need 32-bit support).
 2) Press Win+R, type shell:startup and move downloaded .exe file there, if you want to auto hide media OSD on OS start.
 3) Done!
 ### How to uninstall:
