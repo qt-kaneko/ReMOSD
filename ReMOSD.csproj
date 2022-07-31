@@ -14,11 +14,17 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0</TargetFramework>
     <LangVersion>preview</LangVersion>
+	</PropertyGroup>
 
-		<PublishAot>true</PublishAot>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<!--https://github.com/dotnet/runtime/issues/64337, so go and publish AOT with github actions if you are on OSX on M1-->
+		<PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">
+			true
+		</PublishAot> 
 
-		<DebugType Condition="'$(Configuration)'=='Release'">none</DebugType>
+		<!--Reduce size of release build-->
+		<DebugType>none</DebugType>
 		<TrimmerDefaultAction>link</TrimmerDefaultAction>
 	</PropertyGroup>
 
