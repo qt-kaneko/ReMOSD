@@ -18,7 +18,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-		<!--https://github.com/dotnet/runtime/issues/64337, so go and publish AOT with github actions if you are on OSX on M1-->
+		<!--https://github.com/dotnet/runtime/issues/64337 -->
 		<PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">
 			true
 		</PublishAot> 
