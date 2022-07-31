@@ -10,32 +10,30 @@
 <!--Copyright 2022 Kaneko Qt-->
 
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-	</PropertyGroup>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-		<!--https://github.com/dotnet/runtime/issues/64337 -->
-		<PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">
-			true
-		</PublishAot> 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <!--https://github.com/dotnet/runtime/issues/64337 -->
+    <PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">true</PublishAot> 
 
-		<!--Reduce size of release build-->
-		<DebugType>none</DebugType>
-		<TrimmerDefaultAction>link</TrimmerDefaultAction>
-	</PropertyGroup>
+    <!--Reduce size of release build-->
+    <DebugType>none</DebugType>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<NoWarn>CA1416</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>
