@@ -1,7 +1,7 @@
 #include "MediaOsd.h"
 
-#include <iostream>
-#include <string>
+#include <string_view>
+#include <stdexcept>
 #include <windows.h>
 
 static constexpr std::string_view _className = "NativeHWNDHost\0";

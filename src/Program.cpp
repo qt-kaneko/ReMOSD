@@ -1,6 +1,5 @@
 #include "Program.h"
 
-#include <exception>
 #include <cmath>
 #include <iostream>
 #include <windows.h>
