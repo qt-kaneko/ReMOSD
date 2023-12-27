@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": ["${workspaceFolder}/**"],
+      "compilerPath": "/opt/homebrew/Cellar/mingw-w64/11.0.1/bin/x86_64-w64-mingw32-g++",
+      "cppStandard": "c++20",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}

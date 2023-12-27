@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "CMake Build Debug",
+      "command": "mkdir -p bin && cd bin && cmake ../CMakeLists.txt -DCMAKE_BUILD_TYPE=Debug && cmake --build .",
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "CMake Build Release",
+      "command": "mkdir -p bin && cd bin && cmake ../CMakeLists.txt -DCMAKE_BUILD_TYPE=Release && cmake --build .",
+      "group": "build"
+    }
+  ]
+}
