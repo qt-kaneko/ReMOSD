@@ -1,39 +1,37 @@
-<!--
-  This file is part of ReMOSD.
-
-  ReMOSD is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-  ReMOSD is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along with ReMOSD. If not, see <https://www.gnu.org/licenses/>.
--->
-<!--Copyright 2022 Kaneko Qt-->
-
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-    <!--https://github.com/dotnet/runtime/issues/64337 -->
-    <PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">true</PublishAot> 
+<PropertyGroup>
+  <OutputType>WinExe</OutputType>
+  <TargetFramework>net8.0</TargetFramework>
+  <Nullable>enable</Nullable>
 
-    <!--Reduce size of release build-->
-    <DebugType>none</DebugType>
-    <TrimmerDefaultAction>link</TrimmerDefaultAction>
-  </PropertyGroup>
+  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+</PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>CA1416</NoWarn>
-  </PropertyGroup>
+<PropertyGroup>
+  <NoWarn>CA1416</NoWarn> <!-- This call site is reachable on all platforms. -->
+</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+<PropertyGroup>
+  <OutputPath>bin</OutputPath>
+  <PublishDir>bin</PublishDir>
+  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+  <PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">true</PublishAot> 
+  <!-- <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> -->
+
+  <!--Reduce size of release build-->
+  <DebugType>none</DebugType>
+</PropertyGroup>
+
+<ItemGroup>
+  <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+</ItemGroup>
+
 </Project>
