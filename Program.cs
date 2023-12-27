@@ -37,13 +37,13 @@ static void OnUnhandledException(object s, UnhandledExceptionEventArgs e)
   Console.WriteLine();
 
   Console.WriteLine("""
-                    +----------------------------------------------+
-                    | PLEASE CONSIDER TO SEND A COPY OF TEXT ABOVE |
-                    | OR SCREENSHOT WITH THIS WINDOW TO DEVELOPER. |
-                    |                                              |
-                    | Telegram: @qt_kaneko                         |
-                    | GitHub:   github.com/qt-kaneko/remosd        |
-                    +----------------------------------------------+
+                    +--------------------------------------------------+
+                    | PLEASE CONSIDER SENDING A COPY OF THE TEXT ABOVE |
+                    | OR SCREENSHOT WITH THIS WINDOW TO A DEVELOPER.   |
+                    |                                                  |
+                    | Telegram: @qt-kaneko                             |
+                    | GitHub:   github.com/qt-kaneko/remosd            |
+                    +--------------------------------------------------+
                     """);
   Console.WriteLine();
 
