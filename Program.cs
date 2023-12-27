@@ -3,8 +3,11 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+
 using Windows.Win32.Graphics.Gdi;
+
 using static Windows.Win32.PInvoke;
+
 
 Size _miniOsdSize = new(65, 140);
 
@@ -25,6 +28,7 @@ else
 }
 
 osd.Region = newOsdRegion;
+
 
 static void OnUnhandledException(object s, UnhandledExceptionEventArgs e)
 {

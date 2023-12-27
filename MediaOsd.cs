@@ -1,11 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Threading;
+
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
+
 using static Windows.Win32.System.SystemServices.APPCOMMAND_ID;
 using static Windows.Win32.PInvoke;
-using System;
-using System.Threading;
 
 class MediaOsd
 {
