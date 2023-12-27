@@ -2,7 +2,11 @@
 
 #include <string_view>
 #include <stdexcept>
+#include <thread>
+#include <chrono>
 #include <windows.h>
+
+using namespace std::literals;
 
 static constexpr std::string_view _className = "NativeHWNDHost\0";
 
@@ -31,8 +35,13 @@ MediaOsd MediaOsd::find()
   ::SendMessageA(::GetShellWindow(), WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_MUTE << 16);
   ::SendMessageA(::GetShellWindow(), WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_MUTE << 16);
 
-  osd._hWnd = ::FindWindowExA(NULL, NULL, _className.cbegin(), NULL);
+  for (auto attempt = 1; attempt <= 5; ++attempt)
+  {
+    osd._hWnd = ::FindWindowExA(NULL, NULL, _className.cbegin(), NULL);
+    if (osd._hWnd != NULL) break;
 
+    std::this_thread::sleep_for(250ms);
+  }
   if (osd._hWnd == NULL) throw std::runtime_error("Media OSD window was not found :(");
 
   return osd;
