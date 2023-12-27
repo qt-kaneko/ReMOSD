@@ -21,10 +21,6 @@
 
 <PropertyGroup Condition="'$(Configuration)' == 'Release'">
   <PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">true</PublishAot> 
-  <!-- <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> -->
-
-  <!--Reduce size of release build-->
-  <DebugType>none</DebugType>
 </PropertyGroup>
 
 <ItemGroup>
