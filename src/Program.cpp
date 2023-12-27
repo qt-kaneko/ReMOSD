@@ -1,7 +1,7 @@
 #include "Program.h"
 
 #include <cmath>
-#include <iostream>
+#include <cstdio>
 #include <windows.h>
 
 #include "utils/contains_any_of.h"
@@ -44,20 +44,21 @@ void Program::onException()
   ::AllocConsole();
 
   ::SetConsoleTitleA("ReMOSD");
-  
-  std::cout << exception.what() << "\n";
-  std::cout << "\n";
-  std::cout << "+--------------------------------------------------+\n"
-               "| PLEASE CONSIDER SENDING A COPY OF THE TEXT ABOVE |\n"
-               "| OR SCREENSHOT WITH THIS WINDOW TO A DEVELOPER.   |\n"
-               "|                                                  |\n"
-               "| Telegram: @qt-kaneko                             |\n"
-               "| GitHub:   github.com/qt-kaneko/remosd            |\n"
-               "+--------------------------------------------------+\n";
-  std::cout << "\n";
 
-  std::cout << "Press any key to close this window . . .\n";
-  std::cin.get();
+  std::printf("%s\n", exception.what());
+  std::printf("\n");
+
+  std::printf("+--------------------------------------------------+\n"
+              "| PLEASE CONSIDER SENDING A COPY OF THE TEXT ABOVE |\n"
+              "| OR SCREENSHOT WITH THIS WINDOW TO A DEVELOPER.   |\n"
+              "|                                                  |\n"
+              "| Telegram: @qt-kaneko                             |\n"
+              "| GitHub:   github.com/qt-kaneko/remosd            |\n"
+              "+--------------------------------------------------+\n");
+  std::printf("\n");
+
+  std::printf("Press any key to close this window . . .\n");
+  std::getchar();
 
   std::exit(-1);
 }
