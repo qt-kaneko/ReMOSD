@@ -2,10 +2,10 @@
 
 #include <cmath>
 #include <cstdio>
+#include <exception>
 #include <windows.h>
 
 #include "utils/contains_any_of.h"
-#include "utils/retrieve_exception.h"
 #include "MediaOsd.h"
 
 using namespace std::literals;
@@ -39,26 +39,28 @@ void Program::main(const std::vector<std::string_view> args)
 
 void Program::onException()
 {
-  auto exception = utils::retrieve_exception(std::current_exception());
+  try { std::rethrow_exception(std::current_exception()); }
+  catch (const std::exception& exception)
+  {
+    ::AllocConsole();
 
-  ::AllocConsole();
+    ::SetConsoleTitleA("ReMOSD");
 
-  ::SetConsoleTitleA("ReMOSD");
+    std::printf("%s\n", exception.what());
+    std::printf("\n");
 
-  std::printf("%s\n", exception.what());
-  std::printf("\n");
+    std::printf("+--------------------------------------------------+\n"
+                "| PLEASE CONSIDER SENDING A COPY OF THE TEXT ABOVE |\n"
+                "| OR SCREENSHOT WITH THIS WINDOW TO A DEVELOPER.   |\n"
+                "|                                                  |\n"
+                "| Telegram: @qt-kaneko                             |\n"
+                "| GitHub:   github.com/qt-kaneko/remosd            |\n"
+                "+--------------------------------------------------+\n");
+    std::printf("\n");
 
-  std::printf("+--------------------------------------------------+\n"
-              "| PLEASE CONSIDER SENDING A COPY OF THE TEXT ABOVE |\n"
-              "| OR SCREENSHOT WITH THIS WINDOW TO A DEVELOPER.   |\n"
-              "|                                                  |\n"
-              "| Telegram: @qt-kaneko                             |\n"
-              "| GitHub:   github.com/qt-kaneko/remosd            |\n"
-              "+--------------------------------------------------+\n");
-  std::printf("\n");
+    std::printf("Press any key to close this window . . .\n");
+    std::getchar();
 
-  std::printf("Press any key to close this window . . .\n");
-  std::getchar();
-
-  std::exit(-1);
+    std::abort();
+  }
 }
