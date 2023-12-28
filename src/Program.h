@@ -6,8 +6,9 @@
 class Program
 {
   public:
-    static void main(const std::vector<std::string_view> args);
+    explicit Program(const std::vector<std::string_view>& args);
 
   private:
+    [[noreturn]]
     static void onException();
 };

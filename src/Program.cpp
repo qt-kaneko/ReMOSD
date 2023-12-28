@@ -13,7 +13,7 @@ using namespace std::literals;
 static constexpr int _miniOsdWidth = 65;
 static constexpr int _miniOsdHeight = 140;
 
-void Program::main(const std::vector<std::string_view> args)
+Program::Program(const std::vector<std::string_view>& args)
 {
   std::set_terminate(onException);
 
@@ -26,12 +26,12 @@ void Program::main(const std::vector<std::string_view> args)
   }
   else
   {
-    auto osdScalingCoefficient = osd.getDpi() / 96.0f;
+    auto osdScalingCoefficient = static_cast<float>(osd.getDpi()) / 96.0f;
 
-    newRegion = ::CreateRectRgn(0, 0,
-                                std::round(_miniOsdWidth * osdScalingCoefficient),
-                                std::round(_miniOsdHeight * osdScalingCoefficient));
-    if (newRegion == NULL) std::system_error(::GetLastError(), std::system_category());
+    auto newRegionWidth = static_cast<int>(::round(_miniOsdWidth * osdScalingCoefficient));
+    auto newRegionHeight = static_cast<int>(::round(_miniOsdHeight * osdScalingCoefficient));
+    newRegion = ::CreateRectRgn(0, 0, newRegionWidth, newRegionHeight);
+    if (newRegion == nullptr) throw std::system_error(::GetLastError(), std::system_category());
   }
 
   osd.setRegion(newRegion);

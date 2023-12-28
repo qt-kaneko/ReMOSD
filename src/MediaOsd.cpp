@@ -12,12 +12,16 @@ static constexpr std::string_view _className = "NativeHWNDHost\0";
 
 void MediaOsd::setRegion(HRGN value)
 {
-  ::SetWindowRgn(_hWnd, value, true);
+  auto result = ::SetWindowRgn(_hWnd, value, true);
+  if (result == 0) throw std::system_error(::GetLastError(), std::system_category());
 }
 
 unsigned int MediaOsd::getDpi()
 {
-  return ::GetDpiForWindow(_hWnd);
+  auto dpi = ::GetDpiForWindow(_hWnd);
+  if (dpi == 0) throw std::system_error(::GetLastError(), std::system_category());
+
+  return dpi;
 }
 
 HWND MediaOsd::getHWnd()
@@ -37,12 +41,12 @@ MediaOsd MediaOsd::find()
 
   for (auto attempt = 1; attempt <= 5; ++attempt)
   {
-    osd._hWnd = ::FindWindowExA(NULL, NULL, _className.cbegin(), NULL);
-    if (osd._hWnd != NULL) break;
+    osd._hWnd = ::FindWindowExA(nullptr, nullptr, _className.cbegin(), nullptr);
+    if (osd._hWnd != nullptr) break;
 
     std::this_thread::sleep_for(250ms);
   }
-  if (osd._hWnd == NULL) throw std::runtime_error("Media OSD window was not found :(");
+  if (osd._hWnd == nullptr) throw std::runtime_error("Media OSD window was not found :(");
 
   return osd;
 }

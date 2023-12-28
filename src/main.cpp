@@ -5,5 +5,5 @@
 
 int main(int argc, char* argv[])
 {
-  Program::main(std::vector<std::string_view>(argv, argv + argc));
+  Program(std::vector<std::string_view>(argv, argv + argc));
 }
