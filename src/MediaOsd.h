@@ -15,6 +15,4 @@ class MediaOsd
 
   private:
     HWND _hWnd;
-
-    MediaOsd() = default;
 };

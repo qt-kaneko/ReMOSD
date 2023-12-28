@@ -18,6 +18,7 @@ add_compile_options(
   -Wno-newline-eof -Wno-sign-compare
   -Wno-error=unused-parameter -Wno-error=unused-variable -Wno-error=unused-but-set-variable -Wno-error=unused-value
   -pedantic -pedantic-errors
+  -ffile-prefix-map=${CMAKE_SOURCE_DIR}=.
 )
 add_link_options(
   -static

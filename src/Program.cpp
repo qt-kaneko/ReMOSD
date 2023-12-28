@@ -6,6 +6,7 @@
 #include <windows.h>
 
 #include "utils/contains_any_of.h"
+#include "utils/traced_error.h"
 #include "MediaOsd.h"
 
 using namespace std::literals;
@@ -17,7 +18,9 @@ Program::Program(const std::vector<std::string_view>& args)
 {
   std::set_terminate(onException);
 
-  auto osd = MediaOsd::find();
+  MediaOsd osd;
+  try { osd = MediaOsd::find(); }
+  catch (const utils::traced_error& e) { throw utils::TRACED_ERROR(new utils::traced_error(e)); }
 
   HRGN newRegion;
   if (utils::contains_any_of(args.begin(), args.end(), "--restore"sv, "-r"sv))
@@ -26,27 +29,33 @@ Program::Program(const std::vector<std::string_view>& args)
   }
   else
   {
-    auto osdScalingCoefficient = static_cast<float>(osd.getDpi()) / 96.0f;
+    unsigned int osdDpi;
+    try { osdDpi = osd.getDpi(); }
+    catch (const utils::traced_error& e) { throw utils::TRACED_ERROR(new utils::traced_error(e)); }
+
+    auto osdScalingCoefficient = static_cast<float>(osdDpi) / 96.0f;
 
     auto newRegionWidth = static_cast<int>(::round(_miniOsdWidth * osdScalingCoefficient));
     auto newRegionHeight = static_cast<int>(::round(_miniOsdHeight * osdScalingCoefficient));
+
     newRegion = ::CreateRectRgn(0, 0, newRegionWidth, newRegionHeight);
-    if (newRegion == nullptr) throw std::system_error(::GetLastError(), std::system_category());
+    if (newRegion == nullptr) throw utils::TRACED_ERROR(new std::system_error(::GetLastError(), std::system_category()));
   }
 
-  osd.setRegion(newRegion);
+  try { osd.setRegion(newRegion); }
+  catch (const utils::traced_error& e) { throw utils::TRACED_ERROR(new utils::traced_error(e)); }
 }
 
 void Program::onException()
 {
   try { std::rethrow_exception(std::current_exception()); }
-  catch (const std::exception& exception)
+  catch (const std::exception& e)
   {
     ::AllocConsole();
 
     ::SetConsoleTitleA("ReMOSD");
 
-    std::printf("%s\n", exception.what());
+    std::printf("%s\n", e.what());
     std::printf("\n");
 
     std::printf("+--------------------------------------------------+\n"
@@ -58,7 +67,7 @@ void Program::onException()
                 "+--------------------------------------------------+\n");
     std::printf("\n");
 
-    std::printf("Press any key to close this window . . .\n");
+    std::printf("Press Enter to close this window . . .\n");
     std::getchar();
 
     std::abort();
