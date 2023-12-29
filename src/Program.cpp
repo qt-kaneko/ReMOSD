@@ -5,7 +5,7 @@
 #include <windows.h>
 
 #include "mtd/contains_any_of.h"
-#include "mtd/traced_error.h"
+#include "mtd/trace.h"
 #include "MediaOsd.h"
 
 using namespace std::literals;
@@ -17,7 +17,9 @@ Program::Program(const std::vector<std::string_view>& args)
 {
   std::set_terminate(onException);
 
-  auto osd = trace(MediaOsd::find());
+  auto osd = mtd::trace(
+    MediaOsd::find()
+  );
 
   HRGN newRegion;
   if (mtd::contains_any_of(args.begin(), args.end(), "--restore"sv, "-r"sv))
@@ -26,18 +28,20 @@ Program::Program(const std::vector<std::string_view>& args)
   }
   else
   {
-    auto osdDpi = trace(osd.getDpi());
+    auto osdDpi = mtd::trace(
+      osd.getDpi()
+    );
 
     auto osdScalingCoefficient = static_cast<float>(osdDpi) / 96.0f;
 
-    auto newRegionWidth = static_cast<int>(::round(_miniOsdWidth * osdScalingCoefficient));
-    auto newRegionHeight = static_cast<int>(::round(_miniOsdHeight * osdScalingCoefficient));
+    auto newRegionWidth = static_cast<int>(std::round(_miniOsdWidth * osdScalingCoefficient));
+    auto newRegionHeight = static_cast<int>(std::round(_miniOsdHeight * osdScalingCoefficient));
 
     newRegion = ::CreateRectRgn(0, 0, newRegionWidth, newRegionHeight);
     if (newRegion == nullptr) throw mtd::make_traced(std::system_error(::GetLastError(), std::system_category()));
   }
 
-  trace(
+  mtd::trace(
     osd.setRegion(newRegion)
   );
 }

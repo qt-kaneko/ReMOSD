@@ -15,15 +15,3 @@ namespace mtd
                             const std::source_location& location);
   };
 }
-
-#define make_traced(error) traced_error(std::make_exception_ptr(error), \
-                                        std::source_location::current())
-
-#define trace(expression)                                          \
-  [&](const std::source_location& location) {                      \
-    try { return expression; }                                     \
-    catch (std::exception&)                                        \
-    {                                                              \
-      throw mtd::traced_error(std::current_exception(), location); \
-    }                                                              \
-  }(std::source_location::current())

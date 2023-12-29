@@ -6,7 +6,7 @@
 #include <chrono>
 #include <windows.h>
 
-#include "mtd/traced_error.h"
+#include "mtd/trace.h"
 
 using namespace std::literals;
 
@@ -31,6 +31,7 @@ HWND MediaOsd::getHWnd()
   return _hWnd;
 }
 
+/// @exception std::runtime_error
 MediaOsd MediaOsd::find()
 {
   auto osd = MediaOsd();
