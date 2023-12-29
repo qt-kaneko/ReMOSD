@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <cstdio>
-#include <exception>
 #include <windows.h>
 
 #include "mtd/contains_any_of.h"
@@ -35,7 +34,7 @@ Program::Program(const std::vector<std::string_view>& args)
     auto newRegionHeight = static_cast<int>(::round(_miniOsdHeight * osdScalingCoefficient));
 
     newRegion = ::CreateRectRgn(0, 0, newRegionWidth, newRegionHeight);
-    if (newRegion == nullptr) throw mtd::make_traced(new std::system_error(::GetLastError(), std::system_category()));
+    if (newRegion == nullptr) throw mtd::make_traced(std::system_error(::GetLastError(), std::system_category()));
   }
 
   trace(
@@ -53,53 +52,36 @@ void Program::onException()
   try { std::rethrow_exception(std::current_exception()); }
   catch (const mtd::traced_error& tracedError)
   {
-    std::shared_ptr<std::exception> error;
-    for (auto tracedErrorPtr = &tracedError;
-              tracedErrorPtr != nullptr;
-              tracedErrorPtr = dynamic_cast<mtd::traced_error*>(tracedErrorPtr->error.get()))
+    auto errorPtr = std::make_exception_ptr(tracedError);
+    while (true)
     {
-      error = tracedErrorPtr->error;
+      try { std::rethrow_exception(errorPtr); }
+      catch (const mtd::traced_error& innerTracedError)
+      {
+        message.insert(0, "'")
+               .insert(0, innerTracedError.location.function_name())
+               .insert(0, "'")
+               .insert(0, " ")
+               .insert(0, std::to_string(innerTracedError.location.line()))
+               .insert(0, ":")
+               .insert(0, innerTracedError.location.file_name())
+               .insert(0, "\n  at ");
 
-      message.insert(0, "'")
-             .insert(0, tracedErrorPtr->location.function_name())
-             .insert(0, "'")
-             .insert(0, " ")
-             .insert(0, std::to_string(tracedErrorPtr->location.line()))
-             .insert(0, ":")
-             .insert(0, tracedErrorPtr->location.file_name())
-             .insert(0, "\n  at ");
+        errorPtr = innerTracedError.error;
+      }
+      catch (std::exception&) { break; }
     }
 
-    message.insert(0, "\"");
-    message.insert(0, error->what());
-    message.insert(0, "\"");
+    try { std::rethrow_exception(errorPtr); }
+    catch(const std::exception& error)
+    {
+      message.insert(0, "\"");
+      message.insert(0, error.what());
+      message.insert(0, "\"");
+    }
 
     message.insert(0, " ");
-    message.insert(0,
-      dynamic_cast<std::invalid_argument*>(error.get())     ? "std::invalid_argument" :
-      dynamic_cast<std::domain_error*>(error.get())         ? "std::domain_error" :
-      dynamic_cast<std::length_error*>(error.get())         ? "std::length_error" :
-      dynamic_cast<std::out_of_range*>(error.get())         ? "std::out_of_range" :
-#ifdef future_error
-      dynamic_cast<std::future_error*>(error.get())         ? "std::future_error" :
-#endif
-      dynamic_cast<std::logic_error*>(error.get())          ? "std::logic_error" :
-      dynamic_cast<std::range_error*>(error.get())          ? "std::range_error" :
-      dynamic_cast<std::overflow_error*>(error.get())       ? "std::overflow_error" :
-      dynamic_cast<std::underflow_error*>(error.get())      ? "std::underflow_error" :
-#ifdef regex_error
-      dynamic_cast<std::regex_error*>(error.get())          ? "std::regex_error" :
-#endif
-      dynamic_cast<std::system_error*>(error.get())         ? "std::system_error" :
-      dynamic_cast<std::runtime_error*>(error.get())        ? "std::runtime_error" :
-      dynamic_cast<std::bad_typeid*>(error.get())           ? "std::bad_typeid" :
-      dynamic_cast<std::bad_cast*>(error.get())             ? "std::bad_cast" :
-      dynamic_cast<std::bad_weak_ptr*>(error.get())         ? "std::bad_weak_ptr" :
-      dynamic_cast<std::bad_array_new_length*>(error.get()) ? "std::bad_array_new_length" :
-      dynamic_cast<std::bad_alloc*>(error.get())            ? "std::bad_alloc" :
-      dynamic_cast<std::bad_exception*>(error.get())        ? "std::bad_exception" :
-                                                              "std::exception"
-    );
+    message.insert(0, mapErrorType(errorPtr));
 
     message.insert(0, "Unhandled exception: ");
   }
@@ -109,7 +91,7 @@ void Program::onException()
     message += error.what();
     message += "\"";
   }
-  catch (...) { message += "Not an exception: Why it even exists? o_O"; }
+  catch (...) { message += "Not an exception: why it even exists? o_O"; }
 
   std::printf("%s\n", message.c_str());
   std::printf("\n");
@@ -127,4 +109,26 @@ void Program::onException()
   std::getchar();
 
   std::abort();
+}
+
+const char* Program::mapErrorType(const std::exception_ptr& errorPtr)
+{
+  try { std::rethrow_exception(errorPtr); }
+  catch (std::invalid_argument&)     { return "std::invalid_argument"; }
+  catch (std::domain_error&)         { return "std::domain_error"; }
+  catch (std::length_error&)         { return "std::length_error"; }
+  catch (std::out_of_range&)         { return "std::out_of_range"; }
+  catch (std::logic_error&)          { return "std::logic_error"; }
+  catch (std::range_error&)          { return "std::range_error"; }
+  catch (std::overflow_error&)       { return "std::overflow_error"; }
+  catch (std::underflow_error&)      { return "std::underflow_error"; }
+  catch (std::system_error&)         { return "std::system_error"; }
+  catch (std::runtime_error&)        { return "std::runtime_error"; }
+  catch (std::bad_typeid&)           { return "std::bad_typeid"; }
+  catch (std::bad_cast&)             { return "std::bad_cast"; }
+  catch (std::bad_array_new_length&) { return "std::bad_array_new_length"; }
+  catch (std::bad_alloc&)            { return "std::bad_alloc"; }
+  catch (std::bad_exception&)        { return "std::bad_exception"; }
+  catch (std::exception&)            { return "std::exception"; }
+  catch (...)                        { return "unknown"; }
 }

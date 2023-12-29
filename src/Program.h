@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string_view>
+#include <exception>
 
 class Program
 {
@@ -11,4 +12,6 @@ class Program
   private:
     [[noreturn]]
     static void onException();
+
+    static const char* mapErrorType(const std::exception_ptr& errorPtr);
 };
