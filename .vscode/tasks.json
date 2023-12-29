@@ -5,13 +5,15 @@
       "type": "shell",
       "label": "CMake Build Debug",
       "command": "mkdir -p bin && cd bin && cmake ../CMakeLists.txt -DCMAKE_BUILD_TYPE=Debug && cmake --build . --parallel 8",
-      "group": "build"
+      "group": "build",
+      "problemMatcher": "$gcc"
     },
     {
       "type": "shell",
       "label": "CMake Build Release",
       "command": "mkdir -p bin && cd bin && cmake ../CMakeLists.txt -DCMAKE_BUILD_TYPE=Release && cmake --build . --parallel 8",
-      "group": "build"
+      "group": "build",
+      "problemMatcher": "$gcc"
     }
   ]
 }
