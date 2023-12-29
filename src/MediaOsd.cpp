@@ -6,7 +6,7 @@
 #include <chrono>
 #include <windows.h>
 
-#include "utils/traced_error.h"
+#include "mtd/traced_error.h"
 
 using namespace std::literals;
 
@@ -15,13 +15,13 @@ static constexpr std::string_view _className = "NativeHWNDHost\0";
 void MediaOsd::setRegion(HRGN value)
 {
   auto result = ::SetWindowRgn(_hWnd, value, true);
-  if (result == 0) throw utils::TRACED_ERROR(new std::system_error(::GetLastError(), std::system_category()));
+  if (result == 0) throw mtd::make_traced(new std::system_error(::GetLastError(), std::system_category()));
 }
 
 unsigned int MediaOsd::getDpi()
 {
   auto dpi = ::GetDpiForWindow(_hWnd);
-  if (dpi == 0) throw utils::TRACED_ERROR(new std::system_error(::GetLastError(), std::system_category()));
+  if (dpi == 0) throw mtd::make_traced(new std::system_error(::GetLastError(), std::system_category()));
 
   return dpi;
 }
@@ -48,7 +48,7 @@ MediaOsd MediaOsd::find()
 
     std::this_thread::sleep_for(250ms);
   }
-  if (osd._hWnd == nullptr) throw utils::TRACED_ERROR(new std::runtime_error("Media OSD window was not found :("));
+  if (osd._hWnd == nullptr) throw mtd::make_traced(new std::runtime_error("Media OSD window was not found :("));
 
   return osd;
 }

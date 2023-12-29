@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <iterator>
 
-namespace utils
+namespace mtd
 {
   template<std::input_iterator TIterator,
            typename TValue = std::iterator_traits<TIterator>::value_type>
