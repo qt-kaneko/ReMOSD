@@ -1,11 +1,11 @@
 # Remove Media On Screen Display (ReMOSD)
 ReMOSD is an optimized application to hide Windows media on screen display (OSD). It doesn't work in background and makes all the work on launch.
 
-P.S. Application will wait in the background until media OSD will be shown for a first time (if it was already shown at least one time, application will do its work and close immediately), then it will complete all its work and close.
+P.S. Application will trigger show of media OSD on launch, this is necessary for it to work.
 
 ## How To Basic:
 ### How to install:
-1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/2.1/ReMOSD.exe) (now project supports only 64-bit, download [1.0 release](https://github.com/qt-kaneko/ReMOSD/releases/download/1.0/ReMOSD.exe) if you need 32-bit support).
+1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/3.0/ReMOSD.exe).
 2) Press Win+R, type shell:startup and move downloaded .exe file there, if you want to auto hide media OSD on OS start.
 3) Done!
 ### How to uninstall:
