@@ -13,13 +13,11 @@ class MediaOsd
 
   MediaOsd() {}
 
-  public nint GetRegion(out int region)
+  public int GetRegionBox(out RECT box)
   {
-    var hRgn = CreateRectRgn(0, 0, 0, 0);
-    region = GetWindowRgn(HWnd, hRgn);
-
-    return hRgn;
+    return GetWindowRgnBox(HWnd, out box);
   }
+
   public void SetRegion(nint value)
   {
     var result = SetWindowRgn(HWnd, value, true);

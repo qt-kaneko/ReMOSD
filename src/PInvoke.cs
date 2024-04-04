@@ -4,7 +4,17 @@ namespace ReMOSD;
 
 static class PInvoke
 {
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect </summary>
+  [StructLayout(LayoutKind.Sequential)]
+  public struct RECT
+  {
+    public int left;
+    public int top;
+    public int right;
+    public int bottom;
+  }
+
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgnbox </summary>
   public const int ERROR = 0;
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
@@ -13,35 +23,35 @@ static class PInvoke
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
   public const uint APPCOMMAND_VOLUME_MUTE = 8;
 
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
-  [DllImport("user32.dll")]
-  public static extern int GetWindowRgn(nint hWnd, nint hRgn);
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgnbox </summary>
+  [DllImport("user32.dll", SetLastError = true)]
+  public static extern int GetWindowRgnBox(nint hWnd, out RECT lprc);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowrgn </summary>
-  [DllImport("user32.dll")]
+  [DllImport("user32.dll", SetLastError = true)]
   public static extern int SetWindowRgn(nint hWnd, nint hRgn, bool bRedraw);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdpiforwindow </summary>
-  [DllImport("user32.dll")]
+  [DllImport("user32.dll", SetLastError = true)]
   public static extern uint GetDpiForWindow(nint hWnd);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow </summary>
-  [DllImport("user32.dll")]
+  [DllImport("user32.dll", SetLastError = true)]
   public static extern nint GetShellWindow();
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessage </summary>
-  [DllImport("user32.dll")]
+  [DllImport("user32.dll", SetLastError = true)]
   public static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowexa </summary>
-  [DllImport("user32.dll")]
+  [DllImport("user32.dll", SetLastError = true)]
   public static extern nint FindWindowExA(nint hWndParent, nint hWndChildAfter, string lpszClass, string? lpszWindow);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-createrectrgn </summary>
-  [DllImport("gdi32.dll")]
+  [DllImport("gdi32.dll", SetLastError = true)]
   public static extern nint CreateRectRgn(int x1, int y1, int x2, int y2);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/console/allocconsole </summary>
-  [DllImport("kernel32.dll")]
+  [DllImport("kernel32.dll", SetLastError = true)]
   public static extern bool AllocConsole();
 }

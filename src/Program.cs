@@ -9,7 +9,7 @@ AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 var osd = MediaOsd.Find();
 
-osd.GetRegion(out var osdRegion); // Should free created hRgn, but who cares ¯\_(ツ)_/¯
+var osdRegion = osd.GetRegionBox(out _);
 
 nint newOsdRegion;
 // The specified window does not have a region...
