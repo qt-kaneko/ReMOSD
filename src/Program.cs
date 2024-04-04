@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 using ReMOSD;
@@ -10,12 +9,10 @@ AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 var osd = MediaOsd.Find();
 
-IntPtr newOsdRegion;
-if (args.Contains("--restore") || args.Contains("-r"))
-{
-  newOsdRegion = new IntPtr();
-}
-else
+osd.GetRegion(out var osdRegion); // Should free created hRgn, but who cares ¯\_(ツ)_/¯
+
+nint newOsdRegion;
+if (osdRegion == NULLREGION) // Unchanged
 {
   var osdScalingCoefficient = osd.GetDpi() / 96.0f;
 
@@ -23,6 +20,10 @@ else
                                (int)Math.Round(65 * osdScalingCoefficient),
                                (int)Math.Round(140 * osdScalingCoefficient));
   if (newOsdRegion == default) throw new Win32Exception(Marshal.GetLastWin32Error());
+}
+else // Reset
+{
+  newOsdRegion = 0;
 }
 
 osd.SetRegion(newOsdRegion);
