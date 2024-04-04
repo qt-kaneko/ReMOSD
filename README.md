@@ -5,7 +5,7 @@ P.S. Application will trigger show of Media OSD on launch, this is necessary for
 
 ## How To Basic
 ### How to install
-1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/3.1/ReMOSD.exe).
+1) Download [latest release](https://github.com/qt-kaneko/ReMOSD/releases/download/3.2/ReMOSD.exe).
 2) Open autostart folder (see ["How to open autostart folder"](#how-to-open-autostart-folder)) and move downloaded `.exe` file there, if you want to auto hide Media OSD on OS startup.
 3) Done!
 ### How to uninstall
