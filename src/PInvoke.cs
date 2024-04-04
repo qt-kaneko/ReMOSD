@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace ReMOSD;
 
-static partial class PInvoke
+static class PInvoke
 {
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
   public const uint WM_APPCOMMAND = 793;
