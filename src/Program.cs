@@ -12,7 +12,9 @@ var osd = MediaOsd.Find();
 osd.GetRegion(out var osdRegion); // Should free created hRgn, but who cares ¯\_(ツ)_/¯
 
 nint newOsdRegion;
-if (osdRegion == NULLREGION) // Unchanged
+// The specified window does not have a region...
+// (see https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn)
+if (osdRegion == ERROR) // Unchanged
 {
   var osdScalingCoefficient = osd.GetDpi() / 96.0f;
 

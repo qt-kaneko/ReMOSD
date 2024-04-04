@@ -16,9 +16,7 @@ class MediaOsd
   public nint GetRegion(out int region)
   {
     var hRgn = CreateRectRgn(0, 0, 0, 0);
-
     region = GetWindowRgn(HWnd, hRgn);
-    if (region == ERROR) throw new Win32Exception(Marshal.GetLastWin32Error());
 
     return hRgn;
   }

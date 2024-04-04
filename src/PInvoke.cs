@@ -4,16 +4,13 @@ namespace ReMOSD;
 
 static class PInvoke
 {
+  public const int ERROR = 0;
+
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
   public const uint WM_APPCOMMAND = 793;
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
   public const uint APPCOMMAND_VOLUME_MUTE = 8;
-
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
-  public const int NULLREGION = 0;
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
-  public const int ERROR = 3;
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
   [DllImport("user32.dll")]
