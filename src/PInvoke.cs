@@ -43,9 +43,9 @@ static class PInvoke
   [DllImport("user32.dll", SetLastError = true)]
   public static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
 
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowexa </summary>
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa </summary>
   [DllImport("user32.dll", SetLastError = true)]
-  public static extern nint FindWindowExA(nint hWndParent, nint hWndChildAfter, string lpszClass, string? lpszWindow);
+  public static extern nint FindWindowA(string? lpClassName, string? lpWindowName);
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-createrectrgn </summary>
   [DllImport("gdi32.dll", SetLastError = true)]

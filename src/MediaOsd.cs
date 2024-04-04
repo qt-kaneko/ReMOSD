@@ -45,7 +45,7 @@ class MediaOsd
     var hWnd = default(nint);
     for (var attempt = 1; attempt <= 5; ++attempt)
     {
-      hWnd = FindWindowExA(default, default, "NativeHWNDHost\0", default);
+      hWnd = FindWindowA("NativeHWNDHost\0", default);
       if (hWnd != default) break;
 
       Thread.Sleep(250);
