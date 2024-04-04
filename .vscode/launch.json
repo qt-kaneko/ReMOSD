@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "Build",
-      "program": "${workspaceFolder}/bin/ReMOSD.dll",
+      "program": "${workspaceFolder}/bin/ReMOSD.exe",
       "console": "integratedTerminal"
     }
   ]
