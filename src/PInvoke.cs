@@ -4,6 +4,7 @@ namespace ReMOSD;
 
 static class PInvoke
 {
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn </summary>
   public const int ERROR = 0;
 
   /// <summary> https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-appcommand </summary>
