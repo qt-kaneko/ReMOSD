@@ -2,11 +2,10 @@
 
 <PropertyGroup>
   <OutputType>WinExe</OutputType>
-  <TargetFrameworks>net8.0</TargetFrameworks>
+  <TargetFramework>net46</TargetFramework>
   <LangVersion>latest</LangVersion>
   <Nullable>enable</Nullable>
 
-  <TargetFrameworks>net46</TargetFrameworks>
   <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
   <PublishRelease>true</PublishRelease>
 
