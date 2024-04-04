@@ -2,32 +2,21 @@
 
 <PropertyGroup>
   <OutputType>WinExe</OutputType>
-  <TargetFramework>net8.0</TargetFramework>
+  <TargetFrameworks>net8.0</TargetFrameworks>
+  <LangVersion>latest</LangVersion>
   <Nullable>enable</Nullable>
 
-  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-</PropertyGroup>
+  <TargetFrameworks>net46</TargetFrameworks>
+  <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+  <PublishRelease>true</PublishRelease>
 
-<PropertyGroup>
-  <NoWarn>CA1416</NoWarn> <!-- This call site is reachable on all platforms. -->
-</PropertyGroup>
-
-<PropertyGroup>
+  <InvariantGlobalization>true</InvariantGlobalization>
+  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
   <OutputPath>bin</OutputPath>
   <PublishDir>bin</PublishDir>
   <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 </PropertyGroup>
-
-<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-  <PublishAot Condition="!($([MSBuild]::IsOSPlatform('OSX')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64')">true</PublishAot> 
-</PropertyGroup>
-
-<ItemGroup>
-  <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
-    <PrivateAssets>all</PrivateAssets>
-    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-  </PackageReference>
-</ItemGroup>
 
 </Project>

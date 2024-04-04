@@ -1,34 +1,31 @@
-﻿using System;
+using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-using Windows.Win32.Graphics.Gdi;
-
-using static Windows.Win32.PInvoke;
-
-
-Size _miniOsdSize = new(65, 140);
+using ReMOSD;
+using static ReMOSD.PInvoke;
 
 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 var osd = MediaOsd.Find();
 
-HRGN newOsdRegion;
-if (args.Contains("--restore") || args.Contains("-r")) newOsdRegion = new HRGN();
+IntPtr newOsdRegion;
+if (args.Contains("--restore") || args.Contains("-r"))
+{
+  newOsdRegion = new IntPtr();
+}
 else
 {
-  var osdScalingCoefficient = osd.Dpi / 96.0f;
+  var osdScalingCoefficient = osd.GetDpi() / 96.0f;
 
   newOsdRegion = CreateRectRgn(0, 0,
-                               (int)Math.Round(_miniOsdSize.Width * osdScalingCoefficient),
-                               (int)Math.Round(_miniOsdSize.Height * osdScalingCoefficient));
+                               (int)Math.Round(65 * osdScalingCoefficient),
+                               (int)Math.Round(140 * osdScalingCoefficient));
   if (newOsdRegion == default) throw new Win32Exception(Marshal.GetLastWin32Error());
 }
 
-osd.Region = newOsdRegion;
-
+osd.SetRegion(newOsdRegion);
 
 static void OnUnhandledException(object s, UnhandledExceptionEventArgs e)
 {
