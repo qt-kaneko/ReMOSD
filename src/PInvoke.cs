@@ -39,7 +39,7 @@ static class PInvoke
   [DllImport("user32.dll", SetLastError = true, ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
   public static extern nint GetShellWindow();
 
-  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessage </summary>
+  /// <summary> https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessagea </summary>
   [DllImport("user32.dll", SetLastError = true, ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
   public static extern nint SendMessageA(nint hWnd, uint Msg, nint wParam, nint lParam);
 
