@@ -9,6 +9,7 @@
   <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
   <PublishRelease>true</PublishRelease>
 
+  <Deterministic>true</Deterministic>
   <InvariantGlobalization>true</InvariantGlobalization>
   <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
