@@ -3,22 +3,25 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using static ReMOSD.PInvoke;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.System.SystemServices;
+using static Windows.Win32.PInvoke;
 
 namespace ReMOSD;
 
 class MediaOsd
 {
-  public nint HWnd { get; private set; }
+  public HWND HWnd { get; private set; }
 
   MediaOsd() {}
 
-  public int GetRegionBox(out RECT box)
+  public GDI_REGION_TYPE GetRegionBox(out RECT box)
   {
     return GetWindowRgnBox(HWnd, out box);
   }
 
-  public void SetRegion(nint value)
+  public void SetRegion(HRGN value)
   {
     var result = SetWindowRgn(HWnd, value, true);
     if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -39,13 +42,13 @@ class MediaOsd
     // Trigger show volume control window so it is created and can be found later
     // (to pack APPCOMMAND lParam https://stackoverflow.com/a/29301152/18449435)
     // (https://forums.codeguru.com/showthread.php?147192-How-to-construct-WM_APPCOMMAND-message)
-    SendMessageA(shellHWnd, WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_MUTE << 16);
-    SendMessageA(shellHWnd, WM_APPCOMMAND, 0, APPCOMMAND_VOLUME_MUTE << 16);
+    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_ID.APPCOMMAND_VOLUME_MUTE << 16);
+    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_ID.APPCOMMAND_VOLUME_MUTE << 16);
 
-    var hWnd = default(nint);
+    var hWnd = default(HWND);
     for (var attempt = 1; attempt <= 5; ++attempt)
     {
-      hWnd = FindWindowA("NativeHWNDHost\0", default);
+      hWnd = FindWindow("NativeHWNDHost\0", default);
       if (hWnd != default) break;
 
       Thread.Sleep(250);

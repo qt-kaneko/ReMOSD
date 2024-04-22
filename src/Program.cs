@@ -2,8 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
+using Windows.Win32.Graphics.Gdi;
+using static Windows.Win32.Graphics.Gdi.GDI_REGION_TYPE;
+using static Windows.Win32.PInvoke;
+
 using ReMOSD;
-using static ReMOSD.PInvoke;
 
 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
@@ -11,10 +14,10 @@ var osd = MediaOsd.Find();
 
 var osdRegion = osd.GetRegionBox(out _);
 
-nint newOsdRegion;
+HRGN newOsdRegion;
 // The specified window does not have a region...
 // (see https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn)
-if (osdRegion == ERROR) // Unchanged
+if (osdRegion == RGN_ERROR) // Unchanged
 {
   var osdScalingCoefficient = osd.GetDpi() / 96.0f;
 
@@ -25,7 +28,7 @@ if (osdRegion == ERROR) // Unchanged
 }
 else // Reset
 {
-  newOsdRegion = 0;
+  newOsdRegion = default;
 }
 
 osd.SetRegion(newOsdRegion);
