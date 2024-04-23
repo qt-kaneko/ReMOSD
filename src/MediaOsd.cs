@@ -5,8 +5,8 @@ using System.Threading;
 
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
-using Windows.Win32.System.SystemServices;
 using static Windows.Win32.PInvoke;
+using static Windows.Win32.System.SystemServices.APPCOMMAND_ID;
 
 namespace ReMOSD;
 
@@ -42,8 +42,8 @@ class MediaOsd
     // Trigger show volume control window so it is created and can be found later
     // (to pack APPCOMMAND lParam https://stackoverflow.com/a/29301152/18449435)
     // (https://forums.codeguru.com/showthread.php?147192-How-to-construct-WM_APPCOMMAND-message)
-    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_ID.APPCOMMAND_VOLUME_MUTE << 16);
-    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_ID.APPCOMMAND_VOLUME_MUTE << 16);
+    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_VOLUME_MUTE << 16);
+    SendMessage(shellHWnd, WM_APPCOMMAND, 0, (int)APPCOMMAND_VOLUME_MUTE << 16);
 
     var hWnd = default(HWND);
     for (var attempt = 1; attempt <= 5; ++attempt)
