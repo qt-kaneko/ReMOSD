@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 using Windows.Win32.Foundation;
@@ -24,13 +23,13 @@ class MediaOsd
   public void SetRegion(HRGN value)
   {
     var result = SetWindowRgn(HWnd, value, true);
-    if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+    if (result == 0) throw new Win32Exception();
   }
 
   public uint GetDpi()
   {
     var dpi = GetDpiForWindow(HWnd);
-    if (dpi == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+    if (dpi == 0) throw new Win32Exception();
 
     return dpi;
   }

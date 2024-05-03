@@ -24,7 +24,7 @@ class MediaOsd
   public void SetRegion(HRGN value)
   {
     var result = SetWindowRgn(HWnd, value, true);
-    if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+    if (result == 0) throw new Win32Exception();
   }
 
   public static MediaOsd Find()

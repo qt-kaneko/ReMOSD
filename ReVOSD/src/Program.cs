@@ -21,7 +21,7 @@ if (osdRegion == RGN_ERROR) // Unchanged
 {
   newOsdRegion = CreateRectRgn(0, 0,
                                0, 0);
-  if (newOsdRegion == default) throw new Win32Exception(Marshal.GetLastWin32Error());
+  if (newOsdRegion == default) throw new Win32Exception();
 }
 else // Reset
 {
