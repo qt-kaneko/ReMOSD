@@ -3,16 +3,16 @@
   "tasks": [
     {
       "label": "Build",
-      "command": "dotnet",
       "type": "process",
+      "command": "dotnet",
       "args": ["build"],
       "problemMatcher": "$msCompile",
       "isBuildCommand": true
     },
     {
       "label": "Publish",
-      "command": "dotnet",
       "type": "process",
+      "command": "dotnet",
       "args": ["publish"],
       "problemMatcher": "$msCompile"
     }
