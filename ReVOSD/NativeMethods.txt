@@ -1,0 +1,12 @@
+GetShellWindow
+WM_APPCOMMAND
+APPCOMMAND_ID
+SendMessage
+FindWindow
+
+GetWindowRgnBox
+GetDpiForWindow
+CreateRectRgn
+SetWindowRgn
+
+AllocConsole
