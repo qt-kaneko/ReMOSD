@@ -6,7 +6,7 @@ using Windows.Win32.Graphics.Gdi;
 using static Windows.Win32.Graphics.Gdi.GDI_REGION_TYPE;
 using static Windows.Win32.PInvoke;
 
-using ReMOSD;
+using ReVOSD;
 
 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
@@ -19,11 +19,8 @@ HRGN newOsdRegion;
 // (see https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrgn)
 if (osdRegion == RGN_ERROR) // Unchanged
 {
-  var osdScalingCoefficient = osd.GetDpi() / 96.0f;
-
   newOsdRegion = CreateRectRgn(0, 0,
-                               (int)Math.Round(65 * osdScalingCoefficient),
-                               (int)Math.Round(140 * osdScalingCoefficient));
+                               0, 0);
   if (newOsdRegion == default) throw new Win32Exception(Marshal.GetLastWin32Error());
 }
 else // Reset
@@ -38,7 +35,7 @@ static void OnUnhandledException(object s, UnhandledExceptionEventArgs e)
   var exception = e.ExceptionObject as Exception;
 
   AllocConsole();
-  Console.Title = "ReMOSD";
+  Console.Title = "ReVOSD";
 
   Console.WriteLine(exception);
   Console.WriteLine();

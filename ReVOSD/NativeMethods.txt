@@ -5,7 +5,6 @@ SendMessage
 FindWindow
 
 GetWindowRgnBox
-GetDpiForWindow
 CreateRectRgn
 SetWindowRgn
 

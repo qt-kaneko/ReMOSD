@@ -8,7 +8,7 @@ using Windows.Win32.Graphics.Gdi;
 using static Windows.Win32.PInvoke;
 using static Windows.Win32.System.SystemServices.APPCOMMAND_ID;
 
-namespace ReMOSD;
+namespace ReVOSD;
 
 class MediaOsd
 {
@@ -25,14 +25,6 @@ class MediaOsd
   {
     var result = SetWindowRgn(HWnd, value, true);
     if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
-  }
-
-  public uint GetDpi()
-  {
-    var dpi = GetDpiForWindow(HWnd);
-    if (dpi == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
-
-    return dpi;
   }
 
   public static MediaOsd Find()
