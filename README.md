@@ -1,5 +1,5 @@
 # Remove Media (Volume) On Screen Display (ReMOSD / ReVOSD)
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/qt-kaneko/remosd/total?style=for-the-badge&logo=github&color=%2315A3C7)](#)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/qt-kaneko/remosd/total?style=for-the-badge&logo=github&color=%2315A3C7)](https://github.com/qt-kaneko/ReMOSD/releases/latest)
 
 ReMOSD is an optimized application to hide Windows Media on screen display (OSD). It doesn't work in background and makes all the work on launch.
 
