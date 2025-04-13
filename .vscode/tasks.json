@@ -2,19 +2,32 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build",
-      "type": "process",
+      "label": "Build ReMOSD",
       "command": "dotnet",
-      "args": ["build"],
+      "args": ["build", "-p:DefineConstants=REMOSD"],
       "problemMatcher": "$msCompile",
-      "isBuildCommand": true
+      "group": {"kind": "build"}
     },
     {
-      "label": "Publish",
-      "type": "process",
+      "label": "Build ReVOSD",
       "command": "dotnet",
-      "args": ["publish"],
-      "problemMatcher": "$msCompile"
+      "args": ["build", "-p:DefineConstants=REVOSD"],
+      "problemMatcher": "$msCompile",
+      "group": {"kind": "build"}
+    },
+    {
+      "label": "Publish ReMOSD",
+      "command": "dotnet",
+      "args": ["publish", "-p:DefineConstants=REMOSD"],
+      "problemMatcher": "$msCompile",
+      "group": {"kind": "build"}
+    },
+    {
+      "label": "Publish ReVOSD",
+      "command": "dotnet",
+      "args": ["publish", "-p:DefineConstants=REVOSD"],
+      "problemMatcher": "$msCompile",
+      "group": {"kind": "build"}
     }
   ]
 }
