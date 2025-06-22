@@ -3,7 +3,7 @@
 
 ReMOSD is an optimized application to hide Windows Media on screen display (OSD). It doesn't work in background and makes all the work on launch.
 
-> Also check out ReVOSD to remove Volume OSD entirely!
+> Also check out [ReVOSD](https://github.com/qt-kaneko/ReMOSD/releases/latest/download/ReVOSD.exe) to remove Volume OSD entirely!
 
 P.S. Application will trigger show of Media OSD on launch, this is necessary for it to work.
 
